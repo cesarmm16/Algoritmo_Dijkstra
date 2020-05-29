@@ -1,0 +1,84 @@
+#include<stdio.h>
+#include<conio.h>
+
+#define INFINITO 999999
+#define MAX 10
+
+void dijkstra(int G[MAX][MAX],int n,int nodo_inicial);
+
+int main()
+{
+	int G[MAX][MAX],n,u;
+	printf("Ingresar nro de vertices:");
+	scanf("%d",&n);
+	printf("\nIngresar matriz de adyacencia:\n");
+
+	for(int i=0;i<n;i++)
+		for(int j=0;j<n;j++)
+			scanf("%d",&G[i][j]);
+
+	printf("\nIngresar nodo de inicio:");
+	scanf("%d",&u);
+	dijkstra(G,n,u);
+
+	return 0;
+}
+
+void dijkstra(int G[MAX][MAX],int n,int nodo_inicial)
+{
+
+	int costo[MAX][MAX],distancia[MAX],predecesor[MAX];//
+	int visitado[MAX],count,dist_min,nodo_sig,i,j;
+
+	for(i=0;i<n;i++)
+		for(j=0;j<n;j++)
+			if(G[i][j]==0)
+				costo[i][j]=INFINITO;
+			else
+				costo[i][j]=G[i][j];
+
+	for(i=0;i<n;i++)
+	{
+		distancia[i]=costo[nodo_inicial][i];
+		predecesor[i]=nodo_inicial;
+		visitado[i]=0;
+	}
+
+	distancia[nodo_inicial]=0;
+	visitado[nodo_inicial]=1;
+	count=1;
+
+	while(count<n-1)
+	{
+		dist_min=INFINITO;
+
+		for(i=0;i<n;i++)
+			if(distancia[i]<dist_min&&!visitado[i]){
+				dist_min=distancia[i];
+				nodo_sig=i;
+			}
+
+			visitado[nodo_sig]=1;
+			for(i=0;i<n;i++)
+				if(!visitado[i])
+					if(dist_min+costo[nodo_sig][i]<distancia[i]){
+						distancia[i]=dist_min+costo[nodo_sig][i];
+						predecesor[i]=nodo_sig;
+					}
+		count++;
+	}
+
+	for(i=0;i<n;i++)
+		if(i!=nodo_inicial){
+			printf("\nDistancia del nodo %d = %d",i,distancia[i]);
+			printf("\nCamino: %d",i);
+
+			j=i;
+
+			do
+			{
+				j=predecesor[j];
+				printf(" <- %d",j);
+			}while(j!=nodo_inicial);
+        }
+}
