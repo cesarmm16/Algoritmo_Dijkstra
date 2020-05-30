@@ -1,7 +1,7 @@
 #include<stdio.h>
 
 #define INFINITO 999999
-#define MAX 10
+#define MAX 100
 
 void dijkstra(int G[MAX][MAX],int n,int nodo_inicial);
 
