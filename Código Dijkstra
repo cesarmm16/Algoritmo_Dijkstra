@@ -1,5 +1,4 @@
 #include<stdio.h>
-#include<conio.h>
 
 #define INFINITO 999999
 #define MAX 10
