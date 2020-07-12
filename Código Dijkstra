@@ -5,8 +5,10 @@
 
 void dijkstra(int G[MAX][MAX],int n,int nodo_inicial);
 
-int main()
-{
+int main(){
+    // Esta será la función principal que se encargará de pedir al usuario
+    // los datos a ingresar para ejecutar el algoritmo (matriz de adyacencia, nro de nodos, nodo inicial)
+    // Estos datos serán ingresados en el parametro de la funcion dijkstra.
 	int G[MAX][MAX],n,u;
 	printf("Ingresar nro de vertices:");
 	scanf("%d",&n);
@@ -23,12 +25,14 @@ int main()
 	return 0;
 }
 
-void dijkstra(int G[MAX][MAX],int n,int nodo_inicial)
-{
-
+void dijkstra(int G[MAX][MAX],int n,int nodo_inicial){
+    // Aquí nos encontramos con la función "dijkstra" que se encargará de ejecutar el algoritmo.
+    // Los parámetros ingreasdo aquí son la matriz de adyacencia, el número de vértices y el nodo inicial.
+    // Al comenzar se inciarán algunas variables necesarias
 	int costo[MAX][MAX],distancia[MAX],predecesor[MAX];//
 	int visitado[MAX],count,dist_min,nodo_sig,i,j;
 
+    // Se empezará a contar el costo para cada recorrido de la matriz ingresada "G"
 	for(i=0;i<n;i++)
 		for(j=0;j<n;j++)
 			if(G[i][j]==0)
@@ -36,19 +40,24 @@ void dijkstra(int G[MAX][MAX],int n,int nodo_inicial)
 			else
 				costo[i][j]=G[i][j];
 
-	for(i=0;i<n;i++)
-	{
+    // Luego se empezarán a asignar la distancia del nodo inicial hacia cada nodo de la matriz.
+    // Además de guardar el nodo predecesor al nodo recorrido y asignando que fue visitado.
+	for(i=0;i<n;i++){
 		distancia[i]=costo[nodo_inicial][i];
 		predecesor[i]=nodo_inicial;
 		visitado[i]=0;
 	}
 
+    // Se asigna la distancia hacia el nodo inicial para la siguiente ejecución, además de otras variables.
 	distancia[nodo_inicial]=0;
 	visitado[nodo_inicial]=1;
 	count=1;
 
-	while(count<n-1)
-	{
+	// Este paso es esencial debido a que empezará la asignación de las distancias minimas hacia cada
+	// nodo teniendo en cuenta el costo y comparando con cada nodo adyacente a otro.
+	// Esta es la parte esencial del algoritmo de Estado de enlace para buscar nodos a una menor distancia
+	// dentro de una red y con menor costo.
+	while(count<n-1){
 		dist_min=INFINITO;
 
 		for(i=0;i<n;i++)
@@ -67,6 +76,9 @@ void dijkstra(int G[MAX][MAX],int n,int nodo_inicial)
 		count++;
 	}
 
+	// En esta última parte solo se encargará de imprimir cada nodo con sus respectivos adyacentes y la
+	// distnacia que tomará llegar a ellos.
+	// Además del camino que deberá seguir.
 	for(i=0;i<n;i++)
 		if(i!=nodo_inicial){
 			printf("\nDistancia del nodo %d = %d",i,distancia[i]);
